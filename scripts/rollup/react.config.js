@@ -15,7 +15,7 @@ export default [
     output: {
       file: `${pkgDistPath}/index.js`,
       name: 'index.js',
-      formate: 'umd'
+      format: 'umd'
     },
     plugins: [
       ...getBaseRollupPlugins(),
@@ -45,7 +45,7 @@ export default [
       {
         file: `${pkgDistPath}/jsx-dev-runtime.js`,
         name: 'jsx-dev-runtime.js',
-        formate: 'umd'
+        format: 'umd'
       }
     ],
     plugins: getBaseRollupPlugins()

@@ -66,6 +66,35 @@ export const jsx = (type: ElementType, config: any, ...maybeChildren: any) => {
   return ReactElement(type, key, ref, props);
 };
 
-// 暂时定义开发环境 jsxDEV 和 生产环境 jsx 一致
-// 真实的 React 中的 jsxDev 会输出更多的内容，更严格的检查
-export const jsxDEV = jsx;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const jsxDEV = (type: ElementType, config: any) => {
+  let key: Key = null;
+  const props: Props = {};
+  let ref: Ref = null;
+
+  for (const prop in config) {
+    const val = config[prop];
+    if (prop === 'key') {
+      if (val !== undefined) {
+        key = '' + val;
+      }
+      continue;
+    }
+    if (prop == 'ref') {
+      if (val !== undefined) {
+        ref = val;
+      }
+      continue;
+    }
+
+    // 是不是 config 自己的 prop, 而不是原型上的
+    if ({}.hasOwnProperty.call(config, prop)) {
+      props[prop] = val;
+    }
+  }
+  return ReactElement(type, key, ref, props);
+};
+
+// // 暂时定义开发环境 jsxDEV 和 生产环境 jsx 一致
+// // 真实的 React 中的 jsxDev 会输出更多的内容，更严格的检查
+// export const jsxDEV = jsx;
